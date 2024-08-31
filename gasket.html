@@ -38,25 +38,33 @@
 </head>
 <body>
     <header>
+
     <nav>
         <a href="index.html">Home</a>
         <a href="foam.html">Foam</a>
         <a href="gasket.html">Gasket</a>
     </nav>
+
     </header>
-    <label for="HeightInput">Height:</label>
-    <input type="text" id="HeightInput" placeholder="Enter Height" style="width: 100px;">
+    <div>
+    <label for="HeightInput" style="display: inline-block; width: 130px;">Height:</label>
+    <input type="text" id="HeightInput" placeholder="Enter Height" style="width: 100px; height:10px;">
+    </div>
+
+    <div>
+        <label for="widthInput" style="display: inline-block; width: 130px;">Width:</label>
+        <input type="text" id="widthInput" placeholder="Enter Width" style="width: 100px; height:10px;">
+    </div>
+
+    <div>
+        <label for="numberOfSides" style="display: inline-block; width: 130px;">Number of Sides:</label>
+        <select id="numberOfSides" style="width: 100px;">
+            <option value="3" selected>3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
 
 
-    <label for="widthInput">Width:</label>
-    <input type="text" id="widthInput" placeholder="Enter width"
-style="width: 100px;">
-
-    <label for="numberOfSides">Number of Sides:</label>
-    <select id="numberOfSides">
-        <option value="3" selected>3</option>
-        <option value="4">4</option>
-    </select>
 
     <div id="perimeter3SidedContainer" class="perimeter-container">
         <h1>Magnet</h1>
