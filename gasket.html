@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gasket/Heat Wire</title>
+    <style>
+        body {
+            text-align: center;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            background-size: cover;
+        }
+
+        label {
+            display: inline-block;
+            margin-bottom: 10px;
+            width: 80px;
+        }
+
+        input {
+            width: 150px;
+            padding: 8px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+
+        .perimeter-container {
+            display: none;
+        }
+
+        #result {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+
+    </header>
+    <label for="HeightInput">Height:</label>
+    <input type="text" id="HeightInput" placeholder="Enter Height" style="width: 100px;">
+
+
+    <label for="widthInput">Width:</label>
+    <input type="text" id="widthInput" placeholder="Enter width"
+style="width: 100px;">
+
+    <label for="numberOfSides">Number of Sides:</label>
+    <select id="numberOfSides">
+        <option value="3" selected>3</option>
+        <option value="4">4</option>
+    </select>
+
+    <div id="perimeter3SidedContainer" class="perimeter-container">
+        <h1>Magnet</h1>
+        <p id="result3Sided"><b>3 Sided:</b> <span id="perimeter3Sided" style="color: green;">0</span></p>
+        <h2>Heat Wire</h2>
+        <p id="heatWireResult3Sided">
+            <b>3 Sided :</b> <span id="heatWirePerimeter3Sided" style="color: green;">0</span>
+        </p>
+    </div>
+
+    <div id="perimeter4SidedContainer" class="perimeter-container">
+        <h1>Magnet</h1>
+        <p id="result4Sided"><b>4 Sided:</b> <span id="perimeter4Sided" style="color: green;">0</span></p>
+        <h2>Heat Wire</h2>
+        <p id="heatWireResult4Sided">
+            <b>4 Sided:</b> <span id="heatWirePerimeter4Sided" style="color: green;">0</span>
+        </p>
+    </div>
+
+    <script>
+        function parseFraction(value) {
+            const parts = value.split(' ');
+            if (parts.length === 2) {
+                const whole = parseFloat(parts[0]) || 0;
+                const fractionParts = parts[1].split('/');
+                if (fractionParts.length === 2) {
+                    const numerator = parseFloat(fractionParts[0]) || 0;
+                    const denominator = parseFloat(fractionParts[1]) || 1;
+                    return whole + numerator / denominator;
+                }
+            }
+            return parseFloat(value) || 0;
+        }
+
+        function convertDecimalFeetToFeetAndInches(decimalFeet) {
+            var feet = Math.floor(decimalFeet);
+            var inches = Math.round((decimalFeet - feet) * 12);
+            return feet + "' " + inches + '"';
+        }
+
+        function calculatePerimeters() {
+            var HeightInput = document.getElementById("HeightInput").value.trim();
+            var widthInput = document.getElementById("widthInput").value.trim();
+            var numberOfSides = parseInt(document.getElementById("numberOfSides").value);
+
+            var Height = parseFraction(HeightInput);
+            var width = parseFraction(widthInput);
+
+            if (numberOfSides === 3) {
+                var perimeter3Sided = (Height + Height + width) / 12;
+                var heatWirePerimeter3Sided = (Height * 4 + width * 2) / 12 + 0.33;
+
+                document.getElementById("perimeter3Sided").innerText = convertDecimalFeetToFeetAndInches(perimeter3Sided.toFixed(2));
+                document.getElementById("heatWirePerimeter3Sided").innerText = convertDecimalFeetToFeetAndInches(heatWirePerimeter3Sided.toFixed(2));
+
+                document.getElementById("perimeter3SidedContainer").style.display = "block";
+                document.getElementById("perimeter4SidedContainer").style.display = "none";
+            } else if (numberOfSides === 4) {
+                var perimeter4Sided = (Height + Height + width + width) / 12;
+                var heatWirePerimeter4Sided = (Height + Height + width + width - 2) / 12;
+
+                document.getElementById("perimeter4Sided").innerText = convertDecimalFeetToFeetAndInches(perimeter4Sided.toFixed(2));
+                document.getElementById("heatWirePerimeter4Sided").innerText = convertDecimalFeetToFeetAndInches(heatWirePerimeter4Sided.toFixed(2));
+
+                document.getElementById("perimeter3SidedContainer").style.display = "none";
+                document.getElementById("perimeter4SidedContainer").style.display = "block";
+            }
+        }
+
+        // Attach event listeners to input fields and dropdown
+        document.getElementById("HeightInput").addEventListener("input", calculatePerimeters);
+        document.getElementById("widthInput").addEventListener("input", calculatePerimeters);
+        document.getElementById("numberOfSides").addEventListener("change", calculatePerimeters);
+
+        // Initial calculation
+        calculatePerimeters();
+    </script>
+</body>
+</html>

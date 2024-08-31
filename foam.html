@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <title>Foam</title>
+    <style>
+        body {
+            background-color: #f0f0f0; /* Replace with your preferred color */
+            background-size: cover;
+        }
+        #volume,
+        #result,
+        #lbsResult,
+        #seconds,
+        #dividebyseconds,
+        #additionalInfo,
+        #Seconds {
+            font-weight: bold;
+        }
+
+        #volume span,
+        #result span,
+        #lbsResult span,
+        #seconds span,
+        #dividebyseconds span,
+        #additionalInfo span,
+        #Seconds span {
+            font-weight: normal;
+            color: green;
+        }
+
+        #Truput {
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Foam</h1>
+        <p id="currentTemperature">Current Temperature: <span id="temperatureNumber"></span> °F</p>
+        <label for="weightInput">Weight:</label>
+        <input type="text" id="weightInput" placeholder="1234" size="4">
+        <span id="Truput"></span>
+    </header>
+
+    <section>
+        <!-- Calculation Section -->
+        <div>
+            <label for="lengthInput">L</label>
+            <input type="text" id="lengthInput" placeholder="2 1/2" size="5">
+
+            <label for="widthInput">W</label>
+            <input type="text" id="widthInput" placeholder="1 1/2" size="5">
+
+            <label for="heightDropdown">H</label>
+            <select id="heightDropdown">
+              <option value="4" selected>4</option>
+              <option value="6">6</option>
+            </select>
+
+            <p id="volume">Volume: <span id="volumeNumber"></span></p>
+            <p id="result">Cubic FT: <span id="resultNumber"></span></p>
+            <p id="lbsResult">Lbs: <span id="lbsResultNumber"></span> Bagshot: <span id="bagshotNumber"></span> Total: <span id="totalNumber"></span></p>
+            <p id="seconds">Seconds: <span id="secondsNumber"></span></p>
+            <!-- New Text Box -->
+            <label for="additionalTextInput"><b>-SEC:</b></label>
+            <input type="text" id="additionalTextInput" placeholder="0" size="3"><p>
+          	<p id="dividebyseconds">Total Seconds: <span id="totalSecondsNumber"></span></p>
+            <label for="dividebysecondsinput"><b>Seconds/</b></label>
+            <input type="text" id="dividebysecondsinput" placeholder="0" size="1">
+            
+            <p id="additionalInfo">Divided Seconds: <span id="additionalSecondsNumber"></span></p>
+
+        </div>
+    </section>
+
+    <footer>
+    </footer>
+
+    <!-- JavaScript for Calculation -->
+    <script>
+        function parseFractionOrNumber(input) {
+            if (input.includes(' ')) {
+                var parts = input.split(' ');
+                var wholeNumber = parseFloat(parts[0]) || 0;
+                var fractionParts = parts[1].split('/');
+                var fraction = parseFloat(fractionParts[0]) / parseFloat(fractionParts[1]) || 0;
+                return wholeNumber + fraction;
+            } else {
+                return parseFloat(input) || 0;
+            }
+        }
+
+        function updateCalculation() {
+            var lengthInput = document.getElementById("lengthInput").value.trim();
+            var widthInput = document.getElementById("widthInput").value.trim();
+            var weightInput = document.getElementById("weightInput").value.trim();
+            var length = parseFractionOrNumber(lengthInput);
+            var width = parseFractionOrNumber(widthInput);
+            var weight = parseFloat(weightInput) || 0;
+            var fixedInput = parseInt(document.getElementById("heightDropdown").value);
+
+            var volume = length * width * fixedInput;
+            var result = volume / 1728;
+            var lbsResult = result * 2.4;
+            var bagshot = 12 * (weight * 10 / 454 / 0.6 / 100);
+            var totalLbsAndBagshot = lbsResult + bagshot;
+
+            var seconds = lbsResult / (weight * 10 / 454 / 0.6 / 100);
+
+            document.getElementById("volume").innerHTML = "Volume: <span id='volumeNumber'>" + volume + "</span>";
+            document.getElementById("result").innerHTML = "Cubic FT: <span id='resultNumber'>" + result.toFixed(2) + "</span>";
+            document.getElementById("lbsResult").innerHTML = "Lbs: <span id='lbsResultNumber'>" + lbsResult.toFixed(2) + "</span> Bagshot: <span id='bagshotNumber'>" + bagshot.toFixed(2) + "</span> Total: <span id='totalNumber'>" + totalLbsAndBagshot.toFixed(2) + "</span>";
+            document.getElementById("seconds").innerHTML = "Seconds: <span id='secondsNumber'>" + seconds.toFixed(2) + "</span>";
+
+            document.getElementById("Truput").innerText = "" + (weight * 10 / 454 / 0.6 / 100).toFixed(4);
+
+            var dividebysecondsinput = document.getElementById("dividebysecondsinput").value.trim();
+            var additionalSeconds = parseFloat(dividebysecondsinput) || 0;
+          	var additionalTextInput = document.getElementById("additionalTextInput").value.trim();
+            var totalSeconds = seconds - (additionalTextInput || 0);
+            document.getElementById("dividebyseconds").innerHTML = "Total Seconds: <span id='totalSecondsNumber'>" + totalSeconds.toFixed(2) + "</span>";
+
+            var adjustedSeconds = totalSeconds/ (parseFloat(dividebysecondsinput) || 0);
+            document.getElementById("additionalInfo").innerHTML = "Adjusted Seconds: <span id='additionalSecondsNumber'>" + adjustedSeconds.toFixed(2) + "</span>";
+        }
+
+        document.getElementById("lengthInput").addEventListener("input", updateCalculation);
+        document.getElementById("widthInput").addEventListener("input", updateCalculation);
+        document.getElementById("weightInput").addEventListener("input", updateCalculation);
+        document.getElementById("dividebysecondsinput").addEventListener("input", updateCalculation);
+        document.getElementById("heightDropdown").addEventListener("change", updateCalculation);
+        document.getElementById("additionalTextInput").addEventListener("input", updateCalculation);
+
+        function getCurrentTemperature() {
+            var apiKey = 'd3f8c49491c00adaf128188c2a54ac6c';
+            var city = 'wagner';
+            var apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
+
+            $.get(apiUrl, function (data) {
+                var temperature = data.main.temp;
+                document.getElementById("temperatureNumber").innerText = temperature.toFixed(2);
+            });
+        }
+
+        getCurrentTemperature();
+    </script>
+</body>
+</html>
