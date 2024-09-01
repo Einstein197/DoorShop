@@ -70,8 +70,8 @@
             <p id="lbsResult">Lbs: <span id="lbsResultNumber"></span> Bagshot: <span id="bagshotNumber"></span> Total: <span id="totalNumber"></span></p>
             <p id="seconds">Seconds: <span id="secondsNumber"></span></p>
             <!-- New Text Box -->
-            <label for="additionalTextInput"><b>-SEC:</b></label>
-            <input type="text" id="additionalTextInput" placeholder="0" size="3"><p>
+            <label for="minusseconds"><b>-SEC:</b></label>
+            <input type="text" id="minusseconds" inputmode="decimal" placeholder="0" size="3"><p>
           	<p id="dividebyseconds">Total Seconds: <span id="totalSecondsNumber"></span></p>
             <label for="dividebysecondsinput"><b>Seconds/</b></label>
             <input type="text" id="dividebysecondsinput" inputmode="numeric" placeholder="0" size="1">
@@ -124,8 +124,8 @@
 
             var dividebysecondsinput = document.getElementById("dividebysecondsinput").value.trim();
             var additionalSeconds = parseFloat(dividebysecondsinput) || 0;
-          	var additionalTextInput = document.getElementById("additionalTextInput").value.trim();
-            var totalSeconds = seconds - (additionalTextInput || 0);
+          	var minusseconds = document.getElementById("minusseconds").value.trim();
+            var totalSeconds = seconds - (minusseconds || 0);
             document.getElementById("dividebyseconds").innerHTML = "Total Seconds: <span id='totalSecondsNumber'>" + totalSeconds.toFixed(2) + "</span>";
 
             var adjustedSeconds = totalSeconds/ (parseFloat(dividebysecondsinput) || 0);
@@ -137,7 +137,7 @@
         document.getElementById("weightInput").addEventListener("input", updateCalculation);
         document.getElementById("dividebysecondsinput").addEventListener("input", updateCalculation);
         document.getElementById("heightDropdown").addEventListener("change", updateCalculation);
-        document.getElementById("additionalTextInput").addEventListener("input", updateCalculation);
+        document.getElementById("minusseconds").addEventListener("input", updateCalculation);
 
         function getCurrentTemperature() {
             var apiKey = 'd3f8c49491c00adaf128188c2a54ac6c';
