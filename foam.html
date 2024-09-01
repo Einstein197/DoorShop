@@ -7,9 +7,13 @@
     <title>Foam</title>
     <style>
         body {
-            background-color: #f0f0f0; /* Replace with your preferred color */
+            text-align: center;
+            padding: 20px;
+            font-family: Times, sans-serif;
+            background-color: #Ffffbf; /* Replace with your preferred color */
             background-size: cover;
         }
+
         #volume,
         #result,
         #lbsResult,
@@ -53,21 +57,21 @@
 </head>
 <body>
     <header>
+        <h1>Foam</h1>
+    </header>
+
     <nav>
         <a href="index.html">Home</a>
         <a href="foam.html">Foam</a>
         <a href="gasket.html">Gasket</a>
     </nav>
-        <h1>Foam</h1>
-    </header>
 
     <section>
         <!-- Calculation Section -->
         <div>
             <p id="currentTemperature">Current Temperature: <span id="temperatureNumber"></span> °F</p>
             <p><label for="weightInput">Weight:</label>
-            <input type="text" id="weightInput" inputmode="numeric" placeholder="1234" size="4"></p>
-            <span id="Truput"></span>
+            <input type="text" id="weightInput" inputmode="numeric" placeholder="1234" size="4"> <span id="Truput"></span></p>
             <label for="lengthInput">L</label>
             <input type="text" id="lengthInput" placeholder="2 1/2" size="5">
 
@@ -87,11 +91,10 @@
             <!-- New Text Box -->
             <label for="minusseconds"><b>-SEC:</b></label>
             <input type="text" id="minusseconds" inputmode="decimal" placeholder="0" size="3"><p>
-          	<p id="dividebyseconds">Total Seconds: <span id="totalSecondsNumber"></span></p>
             <label for="dividebysecondsinput"><b>Seconds/</b></label>
             <input type="text" id="dividebysecondsinput" inputmode="numeric" placeholder="0" size="1">
-            
-            <p id="additionalInfo">Divided Seconds: <span id="additionalSecondsNumber"></span></p>
+          	<p id="dividebyseconds">Total Seconds: <span id="totalSecondsNumber"></span></p>
+            <p id="additionalInfo"><span id="additionalSecondsNumber"></span></p>
 
         </div>
     </section>
@@ -144,15 +147,16 @@
             document.getElementById("dividebyseconds").innerHTML = "Total Seconds: <span id='totalSecondsNumber'>" + totalSeconds.toFixed(2) + "</span>";
 
             var adjustedSeconds = totalSeconds/ (parseFloat(dividebysecondsinput) || 0);
-            document.getElementById("additionalInfo").innerHTML = "Adjusted Seconds: <span id='additionalSecondsNumber'>" + adjustedSeconds.toFixed(2) + "</span>";
+            document.getElementById("additionalInfo").innerHTML = "Divided Seconds:  <span id='additionalSecondsNumber'>" + adjustedSeconds.toFixed(2) + "</span>";
         }
 
+        document.getElementById("weightInput").addEventListener("input", updateCalculation);
         document.getElementById("lengthInput").addEventListener("input", updateCalculation);
         document.getElementById("widthInput").addEventListener("input", updateCalculation);
-        document.getElementById("weightInput").addEventListener("input", updateCalculation);
-        document.getElementById("dividebysecondsinput").addEventListener("input", updateCalculation);
         document.getElementById("heightDropdown").addEventListener("change", updateCalculation);
         document.getElementById("minusseconds").addEventListener("input", updateCalculation);
+        document.getElementById("dividebysecondsinput").addEventListener("input", updateCalculation);
+
 
         function getCurrentTemperature() {
             var apiKey = 'd3f8c49491c00adaf128188c2a54ac6c';
