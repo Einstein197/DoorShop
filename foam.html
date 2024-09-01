@@ -115,8 +115,8 @@
 
             var seconds = lbsResult / (weight * 10 / 454 / 0.6 / 100);
 
-            document.getElementById("volume").innerHTML = "Volume: <span id='volumeNumber'>" + volume + "</span>";
-            document.getElementById("result").innerHTML = "Cubic FT: <span id='resultNumber'>" + result.toFixed(2) + "</span>";
+            document.getElementById("volume").innerHTML = "<span id='volumeNumber'>" + "</span>";
+            document.getElementById("result").innerHTML = "<span id='resultNumber'>" + "</span>";
             document.getElementById("lbsResult").innerHTML = "Lbs: <span id='lbsResultNumber'>" + lbsResult.toFixed(2) + "</span> Bagshot: <span id='bagshotNumber'>" + bagshot.toFixed(2) + "</span> Total: <span id='totalNumber'>" + totalLbsAndBagshot.toFixed(2) + "</span>";
             document.getElementById("seconds").innerHTML = "Seconds: <span id='secondsNumber'>" + seconds.toFixed(2) + "</span>";
 
