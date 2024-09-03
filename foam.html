@@ -7,9 +7,13 @@
     <title>Foam</title>
     <style>
         body {
-            background-color: #f0f0f0; /* Replace with your preferred color */
+            text-align: center;
+            padding: 20px;
+            font-family: Times, sans-serif;
+            background-color: #D8FCFA; /* Replace with your preferred color */
             background-size: cover;
         }
+
         #volume,
         #result,
         #lbsResult,
@@ -20,7 +24,7 @@
             font-weight: bold;
         }
         header {
-            background-color: #Ffffbf;
+            background-color: #D8FCFA;
             color: black;
             padding: 20px;
             text-align: center;
@@ -53,29 +57,29 @@
 </head>
 <body>
     <header>
+        <h1>Foam</h1>
+    </header>
+
     <nav>
         <a href="index.html">Home</a>
         <a href="foam.html">Foam</a>
         <a href="gasket.html">Gasket</a>
     </nav>
-        <h1>Foam</h1>
-    </header>
 
     <section>
         <!-- Calculation Section -->
         <div>
             <p id="currentTemperature">Current Temperature: <span id="temperatureNumber"></span> °F</p>
             <p><label for="weightInput">Weight:</label>
-            <input type="text" id="weightInput" inputmode="numeric" placeholder="1234" size="4"></p>
-            <span id="Truput"></span>
+            <input type="text"  id="weightInput" inputmode="numeric" placeholder="1234" size="4" style="border-radius: 10px;"> <span id="Truput"></span></p>
             <label for="lengthInput">L</label>
-            <input type="text" id="lengthInput" placeholder="2 1/2" size="5">
+            <input type="text" id="lengthInput" placeholder="2 1/2" size="5" style="border-radius: 10px;">
 
             <label for="widthInput">W</label>
-            <input type="text" id="widthInput" placeholder="1 1/2" size="5">
+            <input type="text" id="widthInput" placeholder="1 1/2" size="5" style="border-radius: 10px;">
 
             <label for="heightDropdown">H</label>
-            <select id="heightDropdown">
+            <select id="heightDropdown" style="border-radius: 10px;">
               <option value="4" selected>4</option>
               <option value="6">6</option>
             </select>
@@ -86,12 +90,11 @@
             <p id="seconds">Seconds: <span id="secondsNumber"></span></p>
             <!-- New Text Box -->
             <label for="minusseconds"><b>-SEC:</b></label>
-            <input type="text" id="minusseconds" inputmode="decimal" placeholder="0" size="3"><p>
-          	<p id="dividebyseconds">Total Seconds: <span id="totalSecondsNumber"></span></p>
+            <input type="text" id="minusseconds" inputmode="decimal" placeholder="0" size="3" style="border-radius: 10px;"><p>
             <label for="dividebysecondsinput"><b>Seconds/</b></label>
-            <input type="text" id="dividebysecondsinput" inputmode="numeric" placeholder="0" size="1">
-            
-            <p id="additionalInfo">Divided Seconds: <span id="additionalSecondsNumber"></span></p>
+            <input type="text" id="dividebysecondsinput" inputmode="numeric" placeholder="0" size="1" style="border-radius: 10px;">
+          	<p id="dividebyseconds">Total Seconds: <span id="totalSecondsNumber"></span></p>
+            <p id="additionalInfo"><span id="additionalSecondsNumber"></span></p>
 
         </div>
     </section>
@@ -144,15 +147,16 @@
             document.getElementById("dividebyseconds").innerHTML = "Total Seconds: <span id='totalSecondsNumber'>" + totalSeconds.toFixed(2) + "</span>";
 
             var adjustedSeconds = totalSeconds/ (parseFloat(dividebysecondsinput) || 0);
-            document.getElementById("additionalInfo").innerHTML = "Adjusted Seconds: <span id='additionalSecondsNumber'>" + adjustedSeconds.toFixed(2) + "</span>";
+            document.getElementById("additionalInfo").innerHTML = "Divided Seconds:  <span id='additionalSecondsNumber'>" + adjustedSeconds.toFixed(2) + "</span>";
         }
 
+        document.getElementById("weightInput").addEventListener("input", updateCalculation);
         document.getElementById("lengthInput").addEventListener("input", updateCalculation);
         document.getElementById("widthInput").addEventListener("input", updateCalculation);
-        document.getElementById("weightInput").addEventListener("input", updateCalculation);
-        document.getElementById("dividebysecondsinput").addEventListener("input", updateCalculation);
         document.getElementById("heightDropdown").addEventListener("change", updateCalculation);
         document.getElementById("minusseconds").addEventListener("input", updateCalculation);
+        document.getElementById("dividebysecondsinput").addEventListener("input", updateCalculation);
+
 
         function getCurrentTemperature() {
             var apiKey = 'd3f8c49491c00adaf128188c2a54ac6c';
