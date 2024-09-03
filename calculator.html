@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fraction Calculator</title>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="foam.html">Foam</a>
+        <a href="gasket.html">Gasket</a>
+	<a href="calculator.html">Calculator</a>
+    </nav>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -33,8 +39,43 @@
             padding: 20px;
             cursor: pointer;
         }
+        button.number {
+            background-color: #4CAF50; /* Green */
+            color: white;
+            border: none;
+            border-radius: 50px;
+        }
+        button.operator {
+            background-color: #FF5733; /* Orange */
+            color: white;
+            border: none;
+            border-radius: 50px;
+        }
         button.space {
+            background-color: #00BFFF; /* Light Blue */
+            color: white;
             grid-column: span 2;
+            border: none;
+            border-radius: 50px;
+        }
+        button.c {
+            background-color: #00BFFF; /* Light Blue */
+            color: white;
+            border: none;
+            border-radius: 50px;
+        }
+        button.Period {
+            background-color: #20B2AA; /* Teal */
+            color: white;
+            border: none;
+            border-radius: 50px;
+        }
+        button.zero {
+            background-color: #4CAF50; /* Green */
+            color: white;
+            grid-column: span 2;
+            border: none;
+            border-radius: 50px;
         }
     </style>
 </head>
@@ -43,28 +84,28 @@
 <div class="calculator">
     <input type="text" id="display" class="display" readonly>
     
-    <button onclick="appendText('7')">7</button>
-    <button onclick="appendText('8')">8</button>
-    <button onclick="appendText('9')">9</button>
-    <button onclick="appendText('/')">/</button>
+    <button class="number" onclick="appendText('7')">7</button>
+    <button class="number" onclick="appendText('8')">8</button>
+    <button class="number" onclick="appendText('9')">9</button>
+    <button class="operator" onclick="appendText('/')">/</button>
 
-    <button onclick="appendText('4')">4</button>
-    <button onclick="appendText('5')">5</button>
-    <button onclick="appendText('6')">6</button>
-    <button onclick="appendText('*')">*</button>
+    <button class="number" onclick="appendText('4')">4</button>
+    <button class="number" onclick="appendText('5')">5</button>
+    <button class="number" onclick="appendText('6')">6</button>
+    <button class="operator" onclick="appendText('*')">*</button>
 
-    <button onclick="appendText('1')">1</button>
-    <button onclick="appendText('2')">2</button>
-    <button onclick="appendText('3')">3</button>
-    <button onclick="appendText('-')">-</button>
+    <button class="number" onclick="appendText('1')">1</button>
+    <button class="number" onclick="appendText('2')">2</button>
+    <button class="number" onclick="appendText('3')">3</button>
+    <button class="operator" onclick="appendText('-')">-</button>
 
-    <button onclick="appendText('0')">0</button>
-    <button onclick="appendText('.')">.</button>
-    <button onclick="evaluateExpression()">=</button>
-    <button onclick="appendText('+')">+</button>
+    <button class="zero" onclick="appendText('0')">0</button>
+    <button class="Period" onclick="appendText('.')">.</button>
+    <button class="operator" onclick="appendText('+')">+</button>
 
     <button class="space" onclick="appendText(' ')">Space</button>
-    <button onclick="clearDisplay()">C</button>
+    <button class="c" onclick="clearDisplay()">C</button>
+    <button class="operator" onclick="evaluateExpression()">=</button>
 </div>
 
 <script>
@@ -105,7 +146,7 @@
         const fraction = decimal % 1;
         const wholeNumber = Math.floor(decimal);
         if (fraction !== 0) {
-            const denominator = 16; // Arbitrary large number to calculate GCD
+            const denominator = 1000; // Arbitrary large number to calculate GCD
             let numerator = Math.round(fraction * denominator);
             const gcd = getGCD(numerator, denominator);
             numerator /= gcd;
