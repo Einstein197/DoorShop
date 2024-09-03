@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraction Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .calculator {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 300px;
+            margin: auto;
+        }
+        .display {
+            grid-column: span 4;
+            font-size: 24px;
+            padding: 10px;
+            text-align: right;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+        button {
+            font-size: 18px;
+            padding: 20px;
+            cursor: pointer;
+        }
+        button.space {
+            grid-column: span 2;
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator">
+    <input type="text" id="display" class="display" readonly>
+    
+    <button onclick="appendText('7')">7</button>
+    <button onclick="appendText('8')">8</button>
+    <button onclick="appendText('9')">9</button>
+    <button onclick="appendText('/')">/</button>
+
+    <button onclick="appendText('4')">4</button>
+    <button onclick="appendText('5')">5</button>
+    <button onclick="appendText('6')">6</button>
+    <button onclick="appendText('*')">*</button>
+
+    <button onclick="appendText('1')">1</button>
+    <button onclick="appendText('2')">2</button>
+    <button onclick="appendText('3')">3</button>
+    <button onclick="appendText('-')">-</button>
+
+    <button onclick="appendText('0')">0</button>
+    <button onclick="appendText('.')">.</button>
+    <button onclick="evaluateExpression()">=</button>
+    <button onclick="appendText('+')">+</button>
+
+    <button class="space" onclick="appendText(' ')">Space</button>
+    <button onclick="clearDisplay()">C</button>
+</div>
+
+<script>
+    // Function to append text to the display
+    function appendText(text) {
+        document.getElementById("display").value += text;
+    }
+
+    // Function to clear the display
+    function clearDisplay() {
+        document.getElementById("display").value = "";
+    }
+
+    // Function to evaluate the expression
+    function evaluateExpression() {
+        try {
+            const expression = document.getElementById("display").value;
+            // Replace spaces with plus signs for fraction addition
+            const formattedExpression = expression.replace(/\s/g, '+');
+            const result = eval(formattedExpression);
+            
+            const fractionResult = toFraction(result);
+            document.getElementById("display").value = fractionResult;
+        } catch (error) {
+            document.getElementById("display").value = "Error";
+        }
+    }
+
+    // Function to convert decimal to fraction
+    function toFraction(decimal) {
+        const fraction = decimal % 1;
+        const wholeNumber = Math.floor(decimal);
+        if (fraction !== 0) {
+            const denominator = 100000; // Arbitrary large number to calculate GCD
+            let numerator = Math.round(fraction * denominator);
+            const gcd = getGCD(numerator, denominator);
+            numerator /= gcd;
+            const finalDenominator = denominator / gcd;
+            return wholeNumber !== 0 ? `${wholeNumber} ${numerator}/${finalDenominator}` : `${numerator}/${finalDenominator}`;
+        }
+        return `${wholeNumber}`;
+    }
+
+    // Function to calculate greatest common divisor
+    function getGCD(a, b) {
+        return b === 0 ? a : getGCD(b, a % b);
+    }
+</script>
+
+</body>
+</html>
