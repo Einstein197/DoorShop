@@ -5,102 +5,112 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fraction Calculator</title>
     <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
         body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
+            text-align: center;
+            padding: 20px;
+            font-family: Times, sans-serif;
+            background-color: #C5c5c5;
+            background-size: cover;
+        }
 
-header {
-    background-color: #4CAF50;
-    color: white;
-    padding: 20px;
-    text-align: center;
-    width: 100%;
-}
+        header {
+            background-color: #4CAF50;
+            color: black;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            text-align: center;
+            margin: 20px;
+        }
+        nav a {
+            margin: 0 15px;
+            color: #black;
+            text-decoration: none;
+        }
 
-nav {
-    text-align: center;
-    margin: 20px;
-    width: 100%;
-}
+        .calculator-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 300px; /* Adjust width as needed */
+            height: auto; /* Adjust height as needed, or remove if not needed */
+            background-color: #ffffff; /* Optional: Background color for the calculator container */
+            padding: 20px; /* Optional: Padding inside the container */
+            border-radius: 10px; /* Optional: Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Shadow for better visual effect */
+        }
 
-nav a {
-    margin: 0 15px;
-    color: #333;
-    text-decoration: none;
-}
+        .calculator {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 300px;
+            margin: 20px auto;
+        }
 
-.calculator {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    max-width: 300px;
-    margin: 20px auto;
-}
+        .display {
+            grid-column: span 4;
+            font-size: 24px;
+            padding: 10px;
+            text-align: right;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
 
-.display {
-    grid-column: span 4;
-    font-size: 24px;
-    padding: 10px;
-    text-align: right;
-    border: 1px solid #ccc;
-    margin-bottom: 10px;
-}
+        button {
+            font-size: 18px;
+            padding: 20px;
+            cursor: pointer;
+        }
 
-button {
-    font-size: 18px;
-    padding: 20px;
-    cursor: pointer;
-}
+        button.number {
+            background-color: #4CAF50; /* Green */
+            color: white;
+            border: none;
+            border-radius: 50px;
+        }
 
-button.number {
-    background-color: #4CAF50; /* Green */
-    color: white;
-    border: none;
-    border-radius: 50px;
-}
+        button.operator {
+            background-color: #FF5733; /* Orange */
+            color: white;
+            border: none;
+            border-radius: 50px;
+        }
 
-button.operator {
-    background-color: #FF5733; /* Orange */
-    color: white;
-    border: none;
-    border-radius: 50px;
-}
+        button.space {
+            background-color: #00BFFF; /* Light Blue */
+            color: white;
+            grid-column: span 2;
+            border: none;
+            border-radius: 50px;
+        }
 
-button.space {
-    background-color: #00BFFF; /* Light Blue */
-    color: white;
-    grid-column: span 2;
-    border: none;
-    border-radius: 50px;
-}
+        button.c {
+            background-color: #00BFFF; /* Light Blue */
+            color: white;
+            border: none;
+            border-radius: 50px;
+        }
 
-button.c {
-    background-color: #00BFFF; /* Light Blue */
-    color: white;
-    border: none;
-    border-radius: 50px;
-}
+        button.Period {
+            background-color: #20B2AA; /* Teal */
+            color: white;
+            border: none;
+            border-radius: 50px;
+        }
 
-button.Period {
-    background-color: #20B2AA; /* Teal */
-    color: white;
-    border: none;
-    border-radius: 50px;
-}
-
-button.zero {
-    background-color: #4CAF50; /* Green */
-    color: white;
-    grid-column: span 2;
-    border: none;
-    border-radius: 50px;
-}
+        button.zero {
+            background-color: #4CAF50; /* Green */
+            color: white;
+            grid-column: span 2;
+            border: none;
+            border-radius: 50px;
+        }
 
 
     </style>
@@ -108,40 +118,44 @@ button.zero {
 <body>
     <header>
         <h1>Door Shop</h1>
-    </header>
-    <nav>
+        <nav>
         <a href="index.html">Home</a>
         <a href="foam.html">Foam</a>
         <a href="gasket.html">Gasket</a>
 	    <a href="calculator.html">Calculator</a>
     </nav>
+    </header>
+    <div>
+        &nbsp;
+    </div>
+<section class="calculator-container">
+    <div class="calculator">
+        <input type="text" id="display" class="display" readonly>
 
-<div class="calculator">
-    <input type="text" id="display" class="display" readonly>
-    
-    <button class="number" onclick="appendText('7')">7</button>
-    <button class="number" onclick="appendText('8')">8</button>
-    <button class="number" onclick="appendText('9')">9</button>
-    <button class="operator" onclick="appendText('/')">/</button>
+        <button class="number" onclick="appendText('7')">7</button>
+        <button class="number" onclick="appendText('8')">8</button>
+        <button class="number" onclick="appendText('9')">9</button>
+        <button class="operator" onclick="appendText('/')">/</button>
 
-    <button class="number" onclick="appendText('4')">4</button>
-    <button class="number" onclick="appendText('5')">5</button>
-    <button class="number" onclick="appendText('6')">6</button>
-    <button class="operator" onclick="appendText('*')">*</button>
+        <button class="number" onclick="appendText('4')">4</button>
+        <button class="number" onclick="appendText('5')">5</button>
+        <button class="number" onclick="appendText('6')">6</button>
+        <button class="operator" onclick="appendText('*')">*</button>
 
-    <button class="number" onclick="appendText('1')">1</button>
-    <button class="number" onclick="appendText('2')">2</button>
-    <button class="number" onclick="appendText('3')">3</button>
-    <button class="operator" onclick="appendText('-')">-</button>
+        <button class="number" onclick="appendText('1')">1</button>
+        <button class="number" onclick="appendText('2')">2</button>
+        <button class="number" onclick="appendText('3')">3</button>
+        <button class="operator" onclick="appendText('-')">-</button>
 
-    <button class="zero" onclick="appendText('0')">0</button>
-    <button class="Period" onclick="appendText('.')">.</button>
-    <button class="operator" onclick="appendText('+')">+</button>
+        <button class="zero" onclick="appendText('0')">0</button>
+        <button class="Period" onclick="appendText('.')">.</button>
+        <button class="operator" onclick="appendText('+')">+</button>
 
-    <button class="space" onclick="appendText(' ')">Space</button>
-    <button class="c" onclick="clearDisplay()">C</button>
-    <button class="operator" onclick="evaluateExpression()">=</button>
-</div>
+        <button class="space" onclick="appendText(' ')">Space</button>
+        <button class="c" onclick="clearDisplay()">C</button>
+        <button class="operator" onclick="evaluateExpression()">=</button>
+    </div>
+</section>
 
 <script>
     // Function to append text to the display
@@ -164,7 +178,7 @@ button.zero {
 
             // Replace spaces with plus signs for fraction addition
             const formattedExpression = expression.replace(/\s/g, '+');
-            
+
             // Handle fraction expressions
             const result = eval(formattedExpression);
 
