@@ -81,11 +81,18 @@
     // Function to evaluate the expression
     function evaluateExpression() {
         try {
-            const expression = document.getElementById("display").value;
+            let expression = document.getElementById("display").value;
+
+            // Find and wrap fractions like '7 1/2' with parentheses
+            expression = expression.replace(/(\d+)\s+(\d+)\/(\d+)/g, '($1 $2/$3)');
+
             // Replace spaces with plus signs for fraction addition
             const formattedExpression = expression.replace(/\s/g, '+');
-            const result = eval(formattedExpression);
             
+            // Handle fraction expressions
+            const result = eval(formattedExpression);
+
+            // Convert result to fraction format
             const fractionResult = toFraction(result);
             document.getElementById("display").value = fractionResult;
         } catch (error) {
@@ -98,7 +105,7 @@
         const fraction = decimal % 1;
         const wholeNumber = Math.floor(decimal);
         if (fraction !== 0) {
-            const denominator = 100000; // Arbitrary large number to calculate GCD
+            const denominator = 16; // Arbitrary large number to calculate GCD
             let numerator = Math.round(fraction * denominator);
             const gcd = getGCD(numerator, denominator);
             numerator /= gcd;
