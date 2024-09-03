@@ -170,25 +170,34 @@
 
     // Function to evaluate the expression
     function evaluateExpression() {
-        try {
-            let expression = document.getElementById("display").value;
+    try {
+        let expression = document.getElementById("display").value;
 
-            // Find and wrap fractions like '7 1/2' with parentheses
-            expression = expression.replace(/(\d+)\s+(\d+)\/(\d+)/g, '($1 $2/$3)');
+        // Handle mixed fractions by converting them to proper fractions
+        expression = expression.replace(/(\d+)\s+(\d+)\/(\d+)/g, function(match, whole, numerator, denominator) {
+            // Convert mixed fraction to improper fraction or decimal
+            return `${parseInt(whole)} + (${parseInt(numerator)} / ${parseInt(denominator)})`;
+        });
 
-            // Replace spaces with plus signs for fraction addition
-            const formattedExpression = expression.replace(/\s/g, '+');
+        // Log the formatted expression for debugging
+        console.log("Formatted Expression: ", expression);
 
-            // Handle fraction expressions
-            const result = eval(formattedExpression);
+        // Safely evaluate the expression
+        const result = eval(expression);
 
-            // Convert result to fraction format
-            const fractionResult = toFraction(result);
-            document.getElementById("display").value = fractionResult;
-        } catch (error) {
-            document.getElementById("display").value = "Error";
-        }
+        // Debugging: Log the raw result
+        console.log("Raw Result: ", result);
+
+        // Convert result to fraction format if needed
+        const fractionResult = toFraction(result);
+        document.getElementById("display").value = fractionResult;
+    } catch (error) {
+        console.error("Evaluation Error: ", error);
+        document.getElementById("display").value = "Error";
     }
+}
+
+
 
     // Function to convert decimal to nearest fraction of the form n + k/16
 function toFraction(decimal) {
