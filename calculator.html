@@ -4,82 +4,117 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fraction Calculator</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+}
+
+nav {
+    text-align: center;
+    margin: 20px;
+    width: 100%;
+}
+
+nav a {
+    margin: 0 15px;
+    color: #333;
+    text-decoration: none;
+}
+
+.calculator {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    max-width: 300px;
+    margin: 20px auto;
+}
+
+.display {
+    grid-column: span 4;
+    font-size: 24px;
+    padding: 10px;
+    text-align: right;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+button {
+    font-size: 18px;
+    padding: 20px;
+    cursor: pointer;
+}
+
+button.number {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    border-radius: 50px;
+}
+
+button.operator {
+    background-color: #FF5733; /* Orange */
+    color: white;
+    border: none;
+    border-radius: 50px;
+}
+
+button.space {
+    background-color: #00BFFF; /* Light Blue */
+    color: white;
+    grid-column: span 2;
+    border: none;
+    border-radius: 50px;
+}
+
+button.c {
+    background-color: #00BFFF; /* Light Blue */
+    color: white;
+    border: none;
+    border-radius: 50px;
+}
+
+button.Period {
+    background-color: #20B2AA; /* Teal */
+    color: white;
+    border: none;
+    border-radius: 50px;
+}
+
+button.zero {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    grid-column: span 2;
+    border: none;
+    border-radius: 50px;
+}
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Door Shop</h1>
+    </header>
     <nav>
         <a href="index.html">Home</a>
         <a href="foam.html">Foam</a>
         <a href="gasket.html">Gasket</a>
-	<a href="calculator.html">Calculator</a>
+	    <a href="calculator.html">Calculator</a>
     </nav>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .calculator {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            max-width: 300px;
-            margin: auto;
-        }
-        .display {
-            grid-column: span 4;
-            font-size: 24px;
-            padding: 10px;
-            text-align: right;
-            border: 1px solid #ccc;
-            margin-bottom: 10px;
-        }
-        button {
-            font-size: 18px;
-            padding: 20px;
-            cursor: pointer;
-        }
-        button.number {
-            background-color: #4CAF50; /* Green */
-            color: white;
-            border: none;
-            border-radius: 50px;
-        }
-        button.operator {
-            background-color: #FF5733; /* Orange */
-            color: white;
-            border: none;
-            border-radius: 50px;
-        }
-        button.space {
-            background-color: #00BFFF; /* Light Blue */
-            color: white;
-            grid-column: span 2;
-            border: none;
-            border-radius: 50px;
-        }
-        button.c {
-            background-color: #00BFFF; /* Light Blue */
-            color: white;
-            border: none;
-            border-radius: 50px;
-        }
-        button.Period {
-            background-color: #20B2AA; /* Teal */
-            color: white;
-            border: none;
-            border-radius: 50px;
-        }
-        button.zero {
-            background-color: #4CAF50; /* Green */
-            color: white;
-            grid-column: span 2;
-            border: none;
-            border-radius: 50px;
-        }
-    </style>
-</head>
-<body>
 
 <div class="calculator">
     <input type="text" id="display" class="display" readonly>
@@ -141,20 +176,27 @@
         }
     }
 
-    // Function to convert decimal to fraction
-    function toFraction(decimal) {
-        const fraction = decimal % 1;
-        const wholeNumber = Math.floor(decimal);
-        if (fraction !== 0) {
-            const denominator = 1000; // Arbitrary large number to calculate GCD
-            let numerator = Math.round(fraction * denominator);
-            const gcd = getGCD(numerator, denominator);
-            numerator /= gcd;
-            const finalDenominator = denominator / gcd;
-            return wholeNumber !== 0 ? `${wholeNumber} ${numerator}/${finalDenominator}` : `${numerator}/${finalDenominator}`;
+    // Function to convert decimal to nearest fraction of the form n + k/16
+function toFraction(decimal) {
+    const wholeNumber = Math.floor(decimal);
+    const fraction = decimal - wholeNumber;
+
+    if (fraction !== 0) {
+        // Convert the fraction to the nearest 1/16
+        const denominator = 16;
+        let numerator = Math.round(fraction * denominator);
+
+        // Adjust if rounding results in a full fraction (e.g., 16/16)
+        if (numerator === denominator) {
+            numerator = 0;
+            wholeNumber += 1;
         }
-        return `${wholeNumber}`;
+
+        // Return the result in the format n + k/16
+        return wholeNumber !== 0 ? `${wholeNumber} ${numerator}/${denominator}` : `${numerator}/${denominator}`;
     }
+    return `${wholeNumber}`;
+}
 
     // Function to calculate greatest common divisor
     function getGCD(a, b) {
