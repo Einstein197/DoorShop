@@ -290,7 +290,7 @@
         return toFraction(roundedDecimal);
     }
 
-    // Convert decimal to nearest fraction of the form n + k/16
+    // Function to convert decimal to the nearest fraction in lowest terms
     function toFraction(decimal) {
         const wholeNumber = Math.floor(decimal);
         const fraction = decimal - wholeNumber;
@@ -306,18 +306,33 @@
                 wholeNumber += 1;
             }
 
-            // Return the result in the format n + k/16 or simplified fraction
-            return wholeNumber !== 0
-                ? `${wholeNumber} ${numerator}/${denominator}`
-                : `${numerator}/${denominator}`;
+            // If numerator is not zero, reduce the fraction
+            if (numerator !== 0) {
+                // Calculate the GCD of the numerator and denominator
+                const gcd = getGCD(numerator, denominator);
+
+                // Reduce the numerator and denominator using the GCD
+                const reducedNumerator = numerator / gcd;
+                const reducedDenominator = denominator / gcd;
+
+                // Return the result in the format n + k/reducedDenominator
+                if (wholeNumber !== 0) {
+                    return `${wholeNumber} ${reducedNumerator}/${reducedDenominator}`;
+                } else {
+                    return `${reducedNumerator}/${reducedDenominator}`;
+                }
+            }
         }
+
+        // If there's no fractional part, return the whole number
         return `${wholeNumber}`;
     }
 
-    // Function to calculate greatest common divisor (GCD)
+    // Function to calculate the greatest common divisor (GCD)
     function getGCD(a, b) {
         return b === 0 ? a : getGCD(b, a % b);
     }
+
 
 
 
