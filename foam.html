@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <title>Foam</title>
     <style>
@@ -10,7 +10,7 @@
             text-align: center;
             padding: 20px;
             font-family: Times, sans-serif;
-            background-color: white;
+            background-color: #C5c5c5;
             background-size: cover;
         }
 
@@ -26,8 +26,6 @@
 
         header {
             background-color: #4CAF50;
-            width: 100%; /* Ensure the header takes full width */
-            height: 100px; /* Adjust height as needed */
             color: black;
             padding: 20px;
             text-align: center;
@@ -78,6 +76,10 @@
             user-select: none;
         }
 
+        input[type="text"] {
+            font-size: 16px; /* Prevents mobile zoom */
+        }
+
     </style>
 </head>
 <body>
@@ -98,7 +100,7 @@
         <div>
             <p id="currentTemperature">Current Temperature: <span id="temperatureNumber"></span> °F</p>
             <p><label for="weightInput">Weight:</label>
-            <input type="text"  id="weightInput" inputmode="numeric" placeholder="1234" size="4" style="border-radius: 10px;"> <span id="Truput"></span></p>
+            <input type="text" id="weightInput" inputmode="numeric" placeholder="1234" size="4" style="border-radius: 10px;"> <span id="Truput"></span></p>
 
             <label for="lengthInput">L</label>
             <input type="text" id="lengthInput" placeholder="2 1/2" size="5" style="border-radius: 10px;">
@@ -119,7 +121,7 @@
 
             <label for="minusseconds"><b>-SEC:</b></label>
             <input type="text" id="minusseconds" inputmode="decimal" placeholder="0" size="3" style="border-radius: 10px;">
-            
+
             <label for="dividebysecondsinput"><b>Seconds/</b></label>
             <input type="text" id="dividebysecondsinput" inputmode="numeric" placeholder="0" size="1" style="border-radius: 10px;">
 
@@ -194,7 +196,6 @@
             document.getElementById("additionalInfo").innerHTML = "Divided Seconds:  <span id='additionalSecondsNumber'>" + adjustedSeconds.toFixed(2) + "</span>";
         }
 
-        // Input event listeners
         document.getElementById("weightInput").addEventListener("input", updateCalculation);
         document.getElementById("lengthInput").addEventListener("input", updateCalculation);
         document.getElementById("widthInput").addEventListener("input", updateCalculation);
