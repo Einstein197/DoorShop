@@ -13,12 +13,14 @@
             text-align: center;
             padding: 20px;
             font-family: Times, sans-serif;
-            background-color: #C5c5c5;
-            background-size: cover;
-        }
+            background-color: white;
+            background-size: 50% 50%;
+
 
         header {
             background-color: #4CAF50;
+            width: 100%; /* Ensure the header takes full width */
+            height: 100px; /* Adjust height as needed */
             color: black;
             padding: 20px;
             text-align: center;
@@ -32,17 +34,23 @@
             color: #black;
             text-decoration: none;
         }
+        .parent-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
 
         .calculator-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 300px; /* Adjust width as needed */
-            height: auto; /* Adjust height as needed, or remove if not needed */
-            background-color: #FFA500; /* Optional: Background color for the calculator container */
-            padding: 20px; /* Optional: Padding inside the container */
-            border-radius: 10px; /* Optional: Rounded corners */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Shadow for better visual effect */
+            width: 300px;
+            height: auto;
+            background-color: #FFA500;
+            padding: 20px;
+            border-radius: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .calculator {
@@ -55,61 +63,49 @@
 
         .display {
             grid-column: span 4;
-            font-size: 24px;
+            font-size: 30px;
             padding: 10px;
             text-align: right;
-            border: 1px solid #ccc;
+            border: none;
             margin-bottom: 10px;
+            background-color: #555; /* Make the display background black */
+            color: white; /* Make the text color white for contrast */
         }
 
         button {
             font-size: 18px;
             padding: 20px;
             cursor: pointer;
+            color: white;
+            border: none;
+            border-radius: 50px;
         }
 
         button.number {
             background-color: #4CAF50; /* Green */
-            color: white;
-            border: none;
-            border-radius: 50px;
+
         }
 
         button.operator {
             background-color: #FF5733; /* Orange */
-            color: white;
-            border: none;
-            border-radius: 50px;
         }
 
         button.space {
             background-color: #00BFFF; /* Light Blue */
-            color: white;
             grid-column: span 2;
-            border: none;
-            border-radius: 50px;
         }
 
         button.c {
             background-color: #00BFFF; /* Light Blue */
-            color: white;
-            border: none;
-            border-radius: 50px;
         }
 
         button.Period {
             background-color: #20B2AA; /* Teal */
-            color: white;
-            border: none;
-            border-radius: 50px;
         }
 
         button.zero {
             background-color: #4CAF50; /* Green */
-            color: white;
             grid-column: span 2;
-            border: none;
-            border-radius: 50px;
         }
 
 
@@ -128,34 +124,36 @@
     <div>
         &nbsp;
     </div>
-<section class="calculator-container">
-    <div class="calculator">
-        <input type="text" id="display" class="display" readonly>
+    <div class="parent-container">
+        <section class="calculator-container">
+            <div class="calculator">
+                <input type="text" id="display" class="display" readonly>
 
-        <button class="number" onclick="appendText('7')">7</button>
-        <button class="number" onclick="appendText('8')">8</button>
-        <button class="number" onclick="appendText('9')">9</button>
-        <button class="operator" onclick="appendText('/')">/</button>
+                <button class="number" onclick="appendText('7')">7</button>
+                <button class="number" onclick="appendText('8')">8</button>
+                <button class="number" onclick="appendText('9')">9</button>
+                <button class="operator" onclick="appendText('/')">/</button>
 
-        <button class="number" onclick="appendText('4')">4</button>
-        <button class="number" onclick="appendText('5')">5</button>
-        <button class="number" onclick="appendText('6')">6</button>
-        <button class="operator" onclick="appendText('*')">*</button>
+                <button class="number" onclick="appendText('4')">4</button>
+                <button class="number" onclick="appendText('5')">5</button>
+                <button class="number" onclick="appendText('6')">6</button>
+                <button class="operator" onclick="appendText('*')">*</button>
 
-        <button class="number" onclick="appendText('1')">1</button>
-        <button class="number" onclick="appendText('2')">2</button>
-        <button class="number" onclick="appendText('3')">3</button>
-        <button class="operator" onclick="appendText('-')">-</button>
+                <button class="number" onclick="appendText('1')">1</button>
+                <button class="number" onclick="appendText('2')">2</button>
+                <button class="number" onclick="appendText('3')">3</button>
+                <button class="operator" onclick="appendText('-')">-</button>
 
-        <button class="zero" onclick="appendText('0')">0</button>
-        <button class="Period" onclick="appendText('.')">.</button>
-        <button class="operator" onclick="appendText('+')">+</button>
+                <button class="zero" onclick="appendText('0')">0</button>
+                <button class="Period" onclick="appendText('.')">.</button>
+                <button class="operator" onclick="appendText('+')">+</button>
 
-        <button class="space" onclick="appendText(' ')">Space</button>
-        <button class="c" onclick="clearDisplay()">C</button>
-        <button class="operator" onclick="evaluateExpression()">=</button>
+                <button class="space" onclick="appendText(' ')">Space</button>
+                <button class="c" onclick="clearDisplay()">C</button>
+                <button class="operator" onclick="evaluateExpression()">=</button>
+            </div>
+        </section>
     </div>
-</section>
 
 <script>
     // Function to append text to the display
@@ -290,7 +288,7 @@
         return toFraction(roundedDecimal);
     }
 
-    // Convert decimal to nearest fraction of the form n + k/16
+    // Function to convert decimal to the nearest fraction in lowest terms
     function toFraction(decimal) {
         const wholeNumber = Math.floor(decimal);
         const fraction = decimal - wholeNumber;
@@ -306,18 +304,33 @@
                 wholeNumber += 1;
             }
 
-            // Return the result in the format n + k/16 or simplified fraction
-            return wholeNumber !== 0
-                ? `${wholeNumber} ${numerator}/${denominator}`
-                : `${numerator}/${denominator}`;
+            // If numerator is not zero, reduce the fraction
+            if (numerator !== 0) {
+                // Calculate the GCD of the numerator and denominator
+                const gcd = getGCD(numerator, denominator);
+
+                // Reduce the numerator and denominator using the GCD
+                const reducedNumerator = numerator / gcd;
+                const reducedDenominator = denominator / gcd;
+
+                // Return the result in the format n + k/reducedDenominator
+                if (wholeNumber !== 0) {
+                    return `${wholeNumber} ${reducedNumerator}/${reducedDenominator}`;
+                } else {
+                    return `${reducedNumerator}/${reducedDenominator}`;
+                }
+            }
         }
+
+        // If there's no fractional part, return the whole number
         return `${wholeNumber}`;
     }
 
-    // Function to calculate greatest common divisor (GCD)
+    // Function to calculate the greatest common divisor (GCD)
     function getGCD(a, b) {
         return b === 0 ? a : getGCD(b, a % b);
     }
+
 
 
 
