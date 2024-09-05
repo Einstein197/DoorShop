@@ -23,19 +23,22 @@
         #Seconds {
             font-weight: bold;
         }
+
         header {
             background-color: #4CAF50;
             color: black;
             padding: 20px;
             text-align: center;
         }
+
         nav {
             text-align: center;
             margin: 20px;
         }
+
         nav a {
             margin: 0 15px;
-            color: #black;
+            color: black;
             text-decoration: none;
         }
 
@@ -53,30 +56,48 @@
         #Truput {
             color: blue;
         }
+
+        /* Custom Keyboard */
+        .keyboard {
+            display: none;
+            grid-template-columns: repeat(3, 60px);
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .key {
+            padding: 10px;
+            font-size: 18px;
+            text-align: center;
+            background-color: #ccc;
+            border-radius: 10px;
+            cursor: pointer;
+            user-select: none;
+        }
+
     </style>
 </head>
 <body>
     <header>
         <h1>Foam</h1>
         <nav>
-        <a href="index.html">Home</a>
-        <a href="foam.html">Foam</a>
-        <a href="gasket.html">Gasket</a>
-        <a href="calculator.html">Calculator</a>
-    </nav>
+            <a href="index.html">Home</a>
+            <a href="foam.html">Foam</a>
+            <a href="gasket.html">Gasket</a>
+            <a href="calculator.html">Calculator</a>
+        </nav>
     </header>
     <div>
         &nbsp;
     </div>
 
-
-
     <section>
-        <!-- Calculation Section -->
         <div>
             <p id="currentTemperature">Current Temperature: <span id="temperatureNumber"></span> °F</p>
             <p><label for="weightInput">Weight:</label>
             <input type="text"  id="weightInput" inputmode="numeric" placeholder="1234" size="4" style="border-radius: 10px;"> <span id="Truput"></span></p>
+
             <label for="lengthInput">L</label>
             <input type="text" id="lengthInput" placeholder="2 1/2" size="5" style="border-radius: 10px;">
 
@@ -93,21 +114,37 @@
             <p id="result"><span id="resultNumber"></span></p>
             <p id="lbsResult">Lbs: <span id="lbsResultNumber"></span> Bagshot: <span id="bagshotNumber"></span> Total: <span id="totalNumber"></span></p>
             <p id="seconds">Seconds: <span id="secondsNumber"></span></p>
-            <!-- New Text Box -->
+
             <label for="minusseconds"><b>-SEC:</b></label>
-            <input type="text" id="minusseconds" inputmode="decimal" placeholder="0" size="3" style="border-radius: 10px;"><p>
+            <input type="text" id="minusseconds" inputmode="decimal" placeholder="0" size="3" style="border-radius: 10px;">
+            
             <label for="dividebysecondsinput"><b>Seconds/</b></label>
             <input type="text" id="dividebysecondsinput" inputmode="numeric" placeholder="0" size="1" style="border-radius: 10px;">
-          	<p id="dividebyseconds">Total Seconds: <span id="totalSecondsNumber"></span></p>
-            <p id="additionalInfo"><span id="additionalSecondsNumber"></span></p>
 
+            <p id="dividebyseconds">Total Seconds: <span id="totalSecondsNumber"></span></p>
+            <p id="additionalInfo"><span id="additionalSecondsNumber"></span></p>
         </div>
     </section>
+
+    <!-- Custom Keyboard -->
+    <div class="keyboard" id="customKeyboard">
+        <div class="key" onclick="addToInput('1')">1</div>
+        <div class="key" onclick="addToInput('2')">2</div>
+        <div class="key" onclick="addToInput('3')">3</div>
+        <div class="key" onclick="addToInput('4')">4</div>
+        <div class="key" onclick="addToInput('5')">5</div>
+        <div class="key" onclick="addToInput('6')">6</div>
+        <div class="key" onclick="addToInput('7')">7</div>
+        <div class="key" onclick="addToInput('8')">8</div>
+        <div class="key" onclick="addToInput('9')">9</div>
+        <div class="key" onclick="addToInput('/')">/</div>
+        <div class="key" onclick="addToInput(' ')">Space</div>
+        <div class="key" onclick="deleteLast()">Del</div>
+    </div>
 
     <footer>
     </footer>
 
-    <!-- JavaScript for Calculation -->
     <script>
         function parseFractionOrNumber(input) {
             if (input.includes(' ')) {
@@ -147,14 +184,15 @@
 
             var dividebysecondsinput = document.getElementById("dividebysecondsinput").value.trim();
             var additionalSeconds = parseFloat(dividebysecondsinput) || 0;
-          	var minusseconds = document.getElementById("minusseconds").value.trim();
+            var minusseconds = document.getElementById("minusseconds").value.trim();
             var totalSeconds = seconds - (minusseconds || 0);
             document.getElementById("dividebyseconds").innerHTML = "Total Seconds: <span id='totalSecondsNumber'>" + totalSeconds.toFixed(2) + "</span>";
 
-            var adjustedSeconds = totalSeconds/ (parseFloat(dividebysecondsinput) || 0);
+            var adjustedSeconds = totalSeconds / (parseFloat(dividebysecondsinput) || 0);
             document.getElementById("additionalInfo").innerHTML = "Divided Seconds:  <span id='additionalSecondsNumber'>" + adjustedSeconds.toFixed(2) + "</span>";
         }
 
+        // Input event listeners
         document.getElementById("weightInput").addEventListener("input", updateCalculation);
         document.getElementById("lengthInput").addEventListener("input", updateCalculation);
         document.getElementById("widthInput").addEventListener("input", updateCalculation);
@@ -162,6 +200,38 @@
         document.getElementById("minusseconds").addEventListener("input", updateCalculation);
         document.getElementById("dividebysecondsinput").addEventListener("input", updateCalculation);
 
+        // Custom Keyboard Functionality
+        function addToInput(character) {
+            if (currentInputField) {
+                currentInputField.value += character;
+                updateCalculation();
+            }
+        }
+
+        function deleteLast() {
+            if (currentInputField && currentInputField.value.length > 0) {
+                currentInputField.value = currentInputField.value.slice(0, -1);
+                updateCalculation();
+            }
+        }
+
+        let currentInputField = null;
+
+        document.getElementById("lengthInput").addEventListener("focus", function() {
+            currentInputField = this;
+            document.getElementById("customKeyboard").style.display = "grid";
+        });
+
+        document.getElementById("widthInput").addEventListener("focus", function() {
+            currentInputField = this;
+            document.getElementById("customKeyboard").style.display = "grid";
+        });
+
+        document.addEventListener("click", function(event) {
+            if (!event.target.closest('.key') && !event.target.closest('input')) {
+                document.getElementById("customKeyboard").style.display = "none";
+            }
+        });
 
         function getCurrentTemperature() {
             var apiKey = 'd3f8c49491c00adaf128188c2a54ac6c';
