@@ -10,7 +10,7 @@
             text-align: center;
             padding: 20px;
             font-family: Times, sans-serif;
-            background-color: #C5c5c5;
+            background-color: #e3fdf5;
             background-size: cover;
         }
 
@@ -118,6 +118,12 @@
             <label for="widthInput">W</label>
             <input type="text" id="widthInput" inputmode="none" placeholder="1 1/2" size="7" style="border-radius: 10px;">
 
+            <label for="heightDropdown">H</label>
+            <select id="heightDropdown" style="border-radius: 10px;">
+              <option value="4" selected>4</option>
+              <option value="6">6</option>
+            </select>
+
             <!-- Custom Keyboard -->
             <div class="keyboard" id="customKeyboard">
                 <div class="key" onclick="addToInput('1', event)">1</div>
@@ -138,11 +144,7 @@
                 &nbsp;
             </div>
 
-            <label for="heightDropdown">H</label>
-            <select id="heightDropdown" style="border-radius: 10px;">
-              <option value="4" selected>4</option>
-              <option value="6">6</option>
-            </select>
+
 
             <p id="volume"><span id="volumeNumber"></span></p>
             <p id="result"><span id="resultNumber"></span></p>
