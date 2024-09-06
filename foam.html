@@ -75,6 +75,16 @@
             cursor: pointer;
             user-select: none;
         }
+        .zero {
+            padding: 10px;
+            font-size: 18px;
+            text-align: center;
+            background-color: #ccc;
+            border-radius: 10px;
+            cursor: pointer;
+            user-select: none;
+            grid-column: span 3
+        }
 
         input[type="text"] {
             font-size: 16px; /* Prevents mobile zoom */
@@ -122,6 +132,7 @@
                 <div class="key" onclick="addToInput('/')">/</div>
                 <div class="key" onclick="addToInput(' ')">Space</div>
                 <div class="key" onclick="deleteLast()">Del</div>
+                <div class="zero" onclick="addToInput('0')">0</div>
             </div>
             <div>
                 &nbsp;
