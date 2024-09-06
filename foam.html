@@ -237,21 +237,23 @@
         document.getElementById("dividebysecondsinput").addEventListener("input", updateCalculation);
 
         // Custom Keyboard Functionality
-        function addToInput(character, event) {
+                function addToInput(character, event) {
             if (currentInputField) {
                 event.stopPropagation(); // Prevents the event from bubbling up and causing unintended side effects
                 currentInputField.value += character;
-                calculatePerimeters();
+                updateCalculation(); // Call the updateCalculation function after input is updated
             }
         }
+
 
 
         function deleteLast() {
             if (currentInputField && currentInputField.value.length > 0) {
                 currentInputField.value = currentInputField.value.slice(0, -1);
-                updateCalculation();
+                updateCalculation(); // Call updateCalculation after deletion
             }
         }
+
 
         let currentInputField = null;
 
@@ -265,6 +267,7 @@
                 document.getElementById("customKeyboard").style.display = "none";
             }
         });
+
 
         function getCurrentTemperature() {
             var apiKey = 'd3f8c49491c00adaf128188c2a54ac6c';
