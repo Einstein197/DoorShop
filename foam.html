@@ -108,6 +108,25 @@
             <label for="widthInput">W</label>
             <input type="text" id="widthInput" inputmode="none" placeholder="1 1/2" size="7" style="border-radius: 10px;">
 
+            <!-- Custom Keyboard -->
+            <div class="keyboard" id="customKeyboard">
+                <div class="key" onclick="addToInput('1')">1</div>
+                <div class="key" onclick="addToInput('2')">2</div>
+                <div class="key" onclick="addToInput('3')">3</div>
+                <div class="key" onclick="addToInput('4')">4</div>
+                <div class="key" onclick="addToInput('5')">5</div>
+                <div class="key" onclick="addToInput('6')">6</div>
+                <div class="key" onclick="addToInput('7')">7</div>
+                <div class="key" onclick="addToInput('8')">8</div>
+                <div class="key" onclick="addToInput('9')">9</div>
+                <div class="key" onclick="addToInput('/')">/</div>
+                <div class="key" onclick="addToInput(' ')">Space</div>
+                <div class="key" onclick="deleteLast()">Del</div>
+            </div>
+            <div>
+                &nbsp;
+            </div>
+
             <label for="heightDropdown">H</label>
             <select id="heightDropdown" style="border-radius: 10px;">
               <option value="4" selected>4</option>
@@ -129,22 +148,6 @@
             <p id="additionalInfo"><span id="additionalSecondsNumber"></span></p>
         </div>
     </section>
-
-    <!-- Custom Keyboard -->
-    <div class="keyboard" id="customKeyboard">
-        <div class="key" onclick="addToInput('1')">1</div>
-        <div class="key" onclick="addToInput('2')">2</div>
-        <div class="key" onclick="addToInput('3')">3</div>
-        <div class="key" onclick="addToInput('4')">4</div>
-        <div class="key" onclick="addToInput('5')">5</div>
-        <div class="key" onclick="addToInput('6')">6</div>
-        <div class="key" onclick="addToInput('7')">7</div>
-        <div class="key" onclick="addToInput('8')">8</div>
-        <div class="key" onclick="addToInput('9')">9</div>
-        <div class="key" onclick="addToInput('/')">/</div>
-        <div class="key" onclick="addToInput(' ')">Space</div>
-        <div class="key" onclick="deleteLast()">Del</div>
-    </div>
 
     <footer>
     </footer>

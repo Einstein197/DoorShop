@@ -101,6 +101,25 @@
         <label for="widthInput" style="display: inline-block; width: 130px;">Width:</label>
         <input type="text" id="widthInput" inputmode="none" placeholder="Enter Width" style="width: 100px; height:10px; border-radius: 10px;">
     </div>
+    <!-- Custom Keyboard -->
+    <div class="keyboard" id="customKeyboard">
+        <div class="key" onclick="addToInput('1')">1</div>
+        <div class="key" onclick="addToInput('2')">2</div>
+        <div class="key" onclick="addToInput('3')">3</div>
+        <div class="key" onclick="addToInput('4')">4</div>
+        <div class="key" onclick="addToInput('5')">5</div>
+        <div class="key" onclick="addToInput('6')">6</div>
+        <div class="key" onclick="addToInput('7')">7</div>
+        <div class="key" onclick="addToInput('8')">8</div>
+        <div class="key" onclick="addToInput('9')">9</div>
+        <div class="key" onclick="addToInput('/')">/</div>
+        <div class="key" onclick="addToInput(' ')">Space</div>
+        <div class="key" onclick="deleteLast()">Del</div>
+    </div>
+
+    <div>
+        &nbsp;
+    </div>
 
     <div>
         <label for="numberOfSides" style="display: inline-block; width: 130px;">Number of Sides:</label>
@@ -128,22 +147,6 @@
         <p id="heatWireResult4Sided">
             <b>4 Sided:</b> <span id="heatWirePerimeter4Sided" style="color: green;">0</span>
         </p>
-    </div>
-
-    <!-- Custom Keyboard -->
-    <div class="keyboard" id="customKeyboard">
-        <div class="key" onclick="addToInput('1')">1</div>
-        <div class="key" onclick="addToInput('2')">2</div>
-        <div class="key" onclick="addToInput('3')">3</div>
-        <div class="key" onclick="addToInput('4')">4</div>
-        <div class="key" onclick="addToInput('5')">5</div>
-        <div class="key" onclick="addToInput('6')">6</div>
-        <div class="key" onclick="addToInput('7')">7</div>
-        <div class="key" onclick="addToInput('8')">8</div>
-        <div class="key" onclick="addToInput('9')">9</div>
-        <div class="key" onclick="addToInput('/')">/</div>
-        <div class="key" onclick="addToInput(' ')">Space</div>
-        <div class="key" onclick="deleteLast()">Del</div>
     </div>
 
     <script>
