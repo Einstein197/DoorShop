@@ -218,16 +218,22 @@
             }
         }
 
-        // Event listeners for input focus
-        document.getElementById("HeightInput").addEventListener("focus", function() {
-            currentInputField = this;
+        // Event listener for input focus
+        function handleFocus(event) {
+            currentInputField = event.target;
             document.getElementById("customKeyboard").style.display = "grid";
-        });
+            // Clear the input field on focus
+            currentInputField.value = '';
+        }
 
-        document.getElementById("widthInput").addEventListener("focus", function() {
-            currentInputField = this;
-            document.getElementById("customKeyboard").style.display = "grid";
-        });
+        // Event listener for input blur
+        function handleBlur(event) {
+            // Optional: Add any blur-specific logic here
+        }
+
+        // Attach event listeners for focus and blur to input fields
+        document.getElementById("HeightInput").addEventListener("focus", handleFocus);
+        document.getElementById("widthInput").addEventListener("focus", handleFocus);
 
         // Hide keyboard when clicking outside
         document.addEventListener("click", function(event) {
@@ -244,6 +250,7 @@
         // Initial calculation
         calculatePerimeters();
     </script>
+
 
 
 </body>

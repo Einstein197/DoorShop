@@ -196,6 +196,23 @@
             document.getElementById("additionalInfo").innerHTML = "Divided Seconds:  <span id='additionalSecondsNumber'>" + adjustedSeconds.toFixed(2) + "</span>";
         }
 
+        function handleFocus(event) {
+            currentInputField = event.target;
+            document.getElementById("customKeyboard").style.display = "grid";
+            // Clear input field if it was previously focused
+            if (currentInputField && currentInputField.dataset.wasFocused) {
+                currentInputField.value = '';
+                delete currentInputField.dataset.wasFocused;
+            }
+        }
+
+        function handleBlur(event) {
+            if (currentInputField) {
+                // Mark input field as focused
+                currentInputField.dataset.wasFocused = true;
+            }
+        }
+
         document.getElementById("weightInput").addEventListener("input", updateCalculation);
         document.getElementById("lengthInput").addEventListener("input", updateCalculation);
         document.getElementById("widthInput").addEventListener("input", updateCalculation);
@@ -220,15 +237,10 @@
 
         let currentInputField = null;
 
-        document.getElementById("lengthInput").addEventListener("focus", function() {
-            currentInputField = this;
-            document.getElementById("customKeyboard").style.display = "grid";
-        });
-
-        document.getElementById("widthInput").addEventListener("focus", function() {
-            currentInputField = this;
-            document.getElementById("customKeyboard").style.display = "grid";
-        });
+        document.getElementById("lengthInput").addEventListener("focus", handleFocus);
+        document.getElementById("lengthInput").addEventListener("blur", handleBlur);
+        document.getElementById("widthInput").addEventListener("focus", handleFocus);
+        document.getElementById("widthInput").addEventListener("blur", handleBlur);
 
         document.addEventListener("click", function(event) {
             if (!event.target.closest('.key') && !event.target.closest('input')) {
@@ -249,5 +261,6 @@
 
         getCurrentTemperature();
     </script>
+
 </body>
 </html>
