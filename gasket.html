@@ -147,6 +147,10 @@
     </div>
 
     <script>
+        // Global variables
+        let currentInputField = null;
+
+        // Parse fraction
         function parseFraction(value) {
             const parts = value.split(' ');
             if (parts.length === 2) {
@@ -161,12 +165,14 @@
             return parseFloat(value) || 0;
         }
 
+        // Convert decimal feet to feet and inches
         function convertDecimalFeetToFeetAndInches(decimalFeet) {
             var feet = Math.floor(decimalFeet);
             var inches = Math.round((decimalFeet - feet) * 12);
             return feet + "' " + inches + '"';
         }
 
+        // Calculate perimeters
         function calculatePerimeters() {
             var HeightInput = document.getElementById("HeightInput").value.trim();
             var widthInput = document.getElementById("widthInput").value.trim();
@@ -194,40 +200,41 @@
                 document.getElementById("perimeter3SidedContainer").style.display = "none";
                 document.getElementById("perimeter4SidedContainer").style.display = "block";
             }
-                // Custom Keyboard Functionality
-                function addToInput(character) {
-                    if (currentInputField) {
-                        currentInputField.value += character;
-                        updateCalculation();
-                    }
-                }
-
-                function deleteLast() {
-                    if (currentInputField && currentInputField.value.length > 0) {
-                        currentInputField.value = currentInputField.value.slice(0, -1);
-                        updateCalculation();
-                    }
-                }
-
-                let currentInputField = null;
-
-                document.getElementById("HeightInput").addEventListener("focus", function() {
-                    currentInputField = this;
-                    document.getElementById("customKeyboard").style.display = "grid";
-                });
-
-                document.getElementById("widthInput").addEventListener("focus", function() {
-                    currentInputField = this;
-                    document.getElementById("customKeyboard").style.display = "grid";
-                });
-
-                document.addEventListener("click", function(event) {
-                    if (!event.target.closest('.key') && !event.target.closest('input')) {
-                        document.getElementById("customKeyboard").style.display = "none";
-                    }
-                });
-
         }
+
+        // Add character to input field
+        function addToInput(character) {
+            if (currentInputField) {
+                currentInputField.value += character;
+                calculatePerimeters();
+            }
+        }
+
+        // Delete last character from input field
+        function deleteLast() {
+            if (currentInputField && currentInputField.value.length > 0) {
+                currentInputField.value = currentInputField.value.slice(0, -1);
+                calculatePerimeters();
+            }
+        }
+
+        // Event listeners for input focus
+        document.getElementById("HeightInput").addEventListener("focus", function() {
+            currentInputField = this;
+            document.getElementById("customKeyboard").style.display = "grid";
+        });
+
+        document.getElementById("widthInput").addEventListener("focus", function() {
+            currentInputField = this;
+            document.getElementById("customKeyboard").style.display = "grid";
+        });
+
+        // Hide keyboard when clicking outside
+        document.addEventListener("click", function(event) {
+            if (!event.target.closest('.key') && !event.target.closest('input')) {
+                document.getElementById("customKeyboard").style.display = "none";
+            }
+        });
 
         // Attach event listeners to input fields and dropdown
         document.getElementById("HeightInput").addEventListener("input", calculatePerimeters);
@@ -237,6 +244,7 @@
         // Initial calculation
         calculatePerimeters();
     </script>
+
 
 </body>
 </html>
