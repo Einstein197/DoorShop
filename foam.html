@@ -75,7 +75,7 @@
             cursor: pointer;
             user-select: none;
         }
-        .zero {
+        .space {
             padding: 10px;
             font-size: 18px;
             text-align: center;
@@ -135,10 +135,10 @@
                 <div class="key" onclick="addToInput('7', event)">7</div>
                 <div class="key" onclick="addToInput('8', event)">8</div>
                 <div class="key" onclick="addToInput('9', event)">9</div>
-                <div class="zero" onclick="addToInput('0', event)">0</div>
                 <div class="key" onclick="addToInput('/', event)">/</div>
-                <div class="key" onclick="addToInput(' ', event)">Space</div>
+                <div class="key" onclick="addToInput('0', event)">0</div>
                 <div class="key" onclick="deleteLast(), event">Del</div>
+                <div class="space" onclick="addToInput(' ', event)">Space</div>
             </div>
             <div>
                 &nbsp;
