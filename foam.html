@@ -120,7 +120,7 @@
 
             <label for="heightDropdown">H</label>
             <select id="heightDropdown" style="border-radius: 10px;">
-              <option value="4" selected>4</option>
+              <option value="3.75" selected>4</option>
               <option value="6">6</option>
             </select>
 
@@ -185,7 +185,7 @@
             var length = parseFractionOrNumber(lengthInput);
             var width = parseFractionOrNumber(widthInput);
             var weight = parseFloat(weightInput) || 0;
-            var fixedInput = parseInt(document.getElementById("heightDropdown").value);
+            var fixedInput = parseFloat(document.getElementById("heightDropdown").value);
 
             var volume = length * width * fixedInput;
             var result = volume / 1728;
