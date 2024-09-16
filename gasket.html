@@ -67,7 +67,7 @@
             cursor: pointer;
             user-select: none;
         }
-        .zero {
+        .space {
             padding: 10px;
             font-size: 18px;
             text-align: center;
@@ -108,23 +108,25 @@
     <div>
         <label for="widthInput" style="display: inline-block; width: 130px;">Width:</label>
         <input type="text" id="widthInput" inputmode="none" placeholder="Width" style="width: 90px; height:10px; border-radius: 10px;">
-    </div>
     <!-- Custom Keyboard -->
-    <div class="keyboard" id="customKeyboard">
-        <div class="key" onclick="addToInput('1', event)">1</div>
-        <div class="key" onclick="addToInput('2', event)">2</div>
-        <div class="key" onclick="addToInput('3', event)">3</div>
-        <div class="key" onclick="addToInput('4', event)">4</div>
-        <div class="key" onclick="addToInput('5', event)">5</div>
-        <div class="key" onclick="addToInput('6', event)">6</div>
-        <div class="key" onclick="addToInput('7', event)">7</div>
-        <div class="key" onclick="addToInput('8', event)">8</div>
-        <div class="key" onclick="addToInput('9', event)">9</div>
-        <div class="zero" onclick="addToInput('0', event)">0</div>
-        <div class="key" onclick="addToInput('/', event)">/</div>
-        <div class="key" onclick="addToInput(' ', event)">Space</div>
-        <div class="key" onclick="deleteLast(), event">Del</div>
-    </div>
+            <div class="keyboard" id="customKeyboard">
+                <div class="key" onclick="addToInput('1', event)">1</div>
+                <div class="key" onclick="addToInput('2', event)">2</div>
+                <div class="key" onclick="addToInput('3', event)">3</div>
+                <div class="key" onclick="addToInput('4', event)">4</div>
+                <div class="key" onclick="addToInput('5', event)">5</div>
+                <div class="key" onclick="addToInput('6', event)">6</div>
+                <div class="key" onclick="addToInput('7', event)">7</div>
+                <div class="key" onclick="addToInput('8', event)">8</div>
+                <div class="key" onclick="addToInput('9', event)">9</div>
+                <div class="key" onclick="addToInput('/', event)">/</div>
+                <div class="key" onclick="addToInput('0', event)">0</div>
+                <div class="key" onclick="deleteLast(), event">Del</div>
+                <div class="space" onclick="addToInput(' ', event)">Space</div>
+            </div>
+            <div>
+                &nbsp;
+            </div>
 
     <div>
         &nbsp;
