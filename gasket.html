@@ -197,7 +197,7 @@
 
             if (numberOfSides === 3) {
                 var perimeter3Sided = (Height + Height + width) / 12;
-                var heatWirePerimeter3Sided = (Height * 4 + width * 2) / 12 + 0.33;
+                var heatWirePerimeter3Sided = (Height * 4 + width * 2) / 12 + 0.44;
 
                 document.getElementById("perimeter3Sided").innerText = convertDecimalFeetToFeetAndInches(perimeter3Sided.toFixed(2));
                 document.getElementById("heatWirePerimeter3Sided").innerText = convertDecimalFeetToFeetAndInches(heatWirePerimeter3Sided.toFixed(2));
@@ -206,7 +206,7 @@
                 document.getElementById("perimeter4SidedContainer").style.display = "none";
             } else if (numberOfSides === 4) {
                 var perimeter4Sided = (Height + Height + width + width) / 12;
-                var heatWirePerimeter4Sided = (Height + Height + width + width - 2) / 12;
+                var heatWirePerimeter4Sided = (Height + Height + width + width - 1) / 12;
 
                 document.getElementById("perimeter4Sided").innerText = convertDecimalFeetToFeetAndInches(perimeter4Sided.toFixed(2));
                 document.getElementById("heatWirePerimeter4Sided").innerText = convertDecimalFeetToFeetAndInches(heatWirePerimeter4Sided.toFixed(2));
