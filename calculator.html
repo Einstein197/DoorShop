@@ -15,7 +15,6 @@
             font-family: Times, sans-serif;
             background-color: white;
         }
-
         header {
             background-color: #4CAF50;
             width: 100%;
@@ -24,35 +23,31 @@
             padding: 20px;
             text-align: center;
         }
-
         nav {
             text-align: center;
             margin: 20px;
         }
-
         nav a {
             margin: 0 15px;
             color: black;
             text-decoration: none;
         }
-
         .parent-container {
             display: flex;
             justify-content: center;
             align-items: center;
         }
-
         .calculator-container {
             display: flex;
             justify-content: center;
             align-items: center;
             width: 300px;
+            height: auto;
             background-color: #FFA500;
             padding: 20px;
             border-radius: 30px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-
         .calculator {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -60,57 +55,44 @@
             max-width: 300px;
             margin: 20px auto;
         }
-
         .display {
             grid-column: span 4;
             font-size: 30px;
             padding: 10px;
             text-align: right;
-            border: 1px solid #ccc;
+            border: none;
             margin-bottom: 10px;
             background-color: #555;
             color: white;
-            box-sizing: border-box;
         }
-
         button {
-		font-size: 18px;
-        padding: 20px;
-        cursor: pointer;
-        color: white;
-        border: none;
-        border-radius: 50px;
-        touch-action: manipulation; /* Prevent double-tap zoom */
-	    }
-
+            font-size: 18px;
+            padding: 20px;
+            cursor: pointer;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            touch-action: manipulation; /* Prevent double-tap zoom */
+        }
         button.number {
             background-color: #4CAF50; /* Green */
         }
-
         button.operator {
             background-color: #FF5733; /* Orange */
         }
-
         button.space {
             background-color: #00BFFF; /* Light Blue */
             grid-column: span 2;
         }
-
         button.c {
             background-color: #00BFFF; /* Light Blue */
         }
-
         button.Period {
             background-color: #20B2AA; /* Teal */
         }
-
         button.zero {
             background-color: #4CAF50; /* Green */
             grid-column: span 2;
-        }
-
-        button:active {
-            transform: scale(0.95); /* Add a button press effect */
         }
     </style>
 </head>
@@ -154,183 +136,104 @@
             </div>
         </section>
     </div>
-
     <script>
-        // Function to append text to the display
         function appendText(text) {
-            const display = document.getElementById("display");
-            display.value += text;
+            document.getElementById("display").value += text;
         }
-
-        // Function to clear the display
         function clearDisplay() {
-            const display = document.getElementById("display");
-            display.value = "";
+            document.getElementById("display").value = "";
         }
-
-        // Function to evaluate the expression
-    function evaluateExpression() {
-        try {
-            let expression = document.getElementById("display").value;
-
-            // Convert mixed fractions to improper fractions
-            expression = expression.replace(/(\d+)\s+(\d+)\/(\d+)/g, function(match, whole, numerator, denominator) {
-                // Convert the mixed fraction into improper fraction
-                let improperFractionNumerator = (parseInt(whole) * parseInt(denominator)) + parseInt(numerator);
-                let improperFraction = ${improperFractionNumerator}/${denominator};
-                return improperFraction; // Return as improper fraction
-            });
-
-            // Log the formatted expression for debugging
-            console.log("Formatted Expression: ", expression);
-
-            // Safely evaluate the expression by using manual fraction handling
-            const result = evaluateFractionExpression(expression);
-
-            // Debugging: Log the raw result
-            console.log("Raw Result (Fraction): ", result);
-
-            // Convert result to rounded fraction format (nearest 16th)
-            const roundedResult = roundToNearestSixteenth(result);
-
-            // Debugging: Log the rounded result
-            console.log("Rounded Result (Nearest 16th): ", roundedResult);
-
-            // Display the result in the input field
-            document.getElementById("display").value = roundedResult;
-        } catch (error) {
-            console.error("Evaluation Error: ", error);
-            document.getElementById("display").value = "Error";
-        }
-    }
-
-    // Manually evaluate the fraction expression
-    function evaluateFractionExpression(expression) {
-        const tokens = expression.split(/([+\-*/])/); // Split by operators
-        let result = parseFraction(tokens[0]);
-
-        for (let i = 1; i < tokens.length; i += 2) {
-            const operator = tokens[i];
-            const nextFraction = parseFraction(tokens[i + 1]);
-
-            switch (operator) {
-                case '+':
-                    result = addFractions(result, nextFraction);
-                    break;
-                case '-':
-                    result = subtractFractions(result, nextFraction);
-                    break;
-                case '*':
-                    result = multiplyFractions(result, nextFraction);
-                    break;
-                case '/':
-                    result = divideFractions(result, nextFraction);
-                    break;
-                default:
-                    throw new Error("Invalid operator");
+        function evaluateExpression() {
+            try {
+                let expression = document.getElementById("display").value;
+                expression = expression.replace(/(\d+)\s+(\d+)\/(\d+)/g, function(match, whole, numerator, denominator) {
+                    let improperFractionNumerator = (parseInt(whole) * parseInt(denominator)) + parseInt(numerator);
+                    return `${improperFractionNumerator}/${denominator}`;
+                });
+                const result = evaluateFractionExpression(expression);
+                const roundedResult = roundToNearestSixteenth(result);
+                document.getElementById("display").value = roundedResult;
+            } catch (error) {
+                document.getElementById("display").value = "Error";
             }
         }
-
-        return result;
-    }
-
-    // Parse a fraction string (e.g., "3/4" or "5") into an object with numerator and denominator
-    function parseFraction(fractionStr) {
-        if (fractionStr.includes('/')) {
-            const [numerator, denominator] = fractionStr.split('/').map(Number);
-            return { numerator, denominator };
-        } else {
-            return { numerator: parseInt(fractionStr), denominator: 1 }; // Whole number as fraction
-        }
-    }
-
-    // Fraction arithmetic
-    function addFractions(f1, f2) {
-        const numerator = f1.numerator * f2.denominator + f2.numerator * f1.denominator;
-        const denominator = f1.denominator * f2.denominator;
-        return simplifyFraction({ numerator, denominator });
-    }
-
-    function subtractFractions(f1, f2) {
-        const numerator = f1.numerator * f2.denominator - f2.numerator * f1.denominator;
-        const denominator = f1.denominator * f2.denominator;
-        return simplifyFraction({ numerator, denominator });
-    }
-
-    function multiplyFractions(f1, f2) {
-        const numerator = f1.numerator * f2.numerator;
-        const denominator = f1.denominator * f2.denominator;
-        return simplifyFraction({ numerator, denominator });
-    }
-
-    function divideFractions(f1, f2) {
-        const numerator = f1.numerator * f2.denominator;
-        const denominator = f1.denominator * f2.numerator;
-        if (denominator === 0) {
-            throw new Error("Division by zero");
-        }
-        return simplifyFraction({ numerator, denominator });
-    }
-
-    // Simplify a fraction using GCD
-    function simplifyFraction(fraction) {
-        const gcd = getGCD(fraction.numerator, fraction.denominator);
-        return {
-            numerator: fraction.numerator / gcd,
-            denominator: fraction.denominator / gcd
-        };
-    }
-
-    // Round the fraction result to the nearest 16th
-    function roundToNearestSixteenth(fraction) {
-        const denominator = 16;
-        const decimal = fraction.numerator / fraction.denominator;
-        const roundedDecimal = Math.round(decimal * denominator) / denominator;
-        return toFraction(roundedDecimal);
-    }
-
-    // Function to convert decimal to the nearest fraction in lowest terms
-    function toFraction(decimal) {
-        const wholeNumber = Math.floor(decimal);
-        const fraction = decimal - wholeNumber;
-
-        if (fraction !== 0) {
-            // Convert the fraction to the nearest 1/16
-            const denominator = 16;
-            let numerator = Math.round(fraction * denominator);
-
-            // Adjust if rounding results in a full fraction (e.g., 16/16)
-            if (numerator === denominator) {
-                numerator = 0;
-                wholeNumber += 1;
-            }
-
-            // If numerator is not zero, reduce the fraction
-            if (numerator !== 0) {
-                // Calculate the GCD of the numerator and denominator
-                const gcd = getGCD(numerator, denominator);
-
-                // Reduce the numerator and denominator using the GCD
-                const reducedNumerator = numerator / gcd;
-                const reducedDenominator = denominator / gcd;
-
-                // Return the result in the format n + k/reducedDenominator
-                if (wholeNumber !== 0) {
-                    return ${wholeNumber} ${reducedNumerator}/${reducedDenominator};
-                } else {
-                    return ${reducedNumerator}/${reducedDenominator};
+        function evaluateFractionExpression(expression) {
+            const tokens = expression.split(/([+\-*/])/);
+            let result = parseFraction(tokens[0]);
+            for (let i = 1; i < tokens.length; i += 2) {
+                const operator = tokens[i];
+                const nextFraction = parseFraction(tokens[i + 1]);
+                switch (operator) {
+                    case '+': result = addFractions(result, nextFraction); break;
+                    case '-': result = subtractFractions(result, nextFraction); break;
+                    case '*': result = multiplyFractions(result, nextFraction); break;
+                    case '/': result = divideFractions(result, nextFraction); break;
                 }
             }
+            return result;
         }
-
-        // If there's no fractional part, return the whole number
-        return ${wholeNumber};
-    }
-
-    // Function to calculate the greatest common divisor (GCD)
-    function getGCD(a, b) {
-        return b === 0 ? a : getGCD(b, a % b);
-    }
+        function parseFraction(fractionStr) {
+            if (fractionStr.includes('/')) {
+                const [numerator, denominator] = fractionStr.split('/').map(Number);
+                return { numerator, denominator };
+            } else {
+                return { numerator: parseInt(fractionStr), denominator: 1 };
+            }
+        }
+        function addFractions(f1, f2) {
+            const numerator = f1.numerator * f2.denominator + f2.numerator * f1.denominator;
+            const denominator = f1.denominator * f2.denominator;
+            return simplifyFraction({ numerator, denominator });
+        }
+        function subtractFractions(f1, f2) {
+            const numerator = f1.numerator * f2.denominator - f2.numerator * f1.denominator;
+            const denominator = f1.denominator * f2.denominator;
+            return simplifyFraction({ numerator, denominator });
+        }
+        function multiplyFractions(f1, f2) {
+            const numerator = f1.numerator * f2.numerator;
+            const denominator = f1.denominator * f2.denominator;
+            return simplifyFraction({ numerator, denominator });
+        }
+        function divideFractions(f1, f2) {
+            const numerator = f1.numerator * f2.denominator;
+            const denominator = f1.denominator * f2.numerator;
+            if (denominator === 0) throw new Error("Division by zero");
+            return simplifyFraction({ numerator, denominator });
+        }
+        function simplifyFraction(fraction) {
+            const gcd = getGCD(fraction.numerator, fraction.denominator);
+            return {
+                numerator: fraction.numerator / gcd,
+                denominator: fraction.denominator / gcd
+            };
+        }
+        function roundToNearestSixteenth(fraction) {
+            const denominator = 16;
+            const decimal = fraction.numerator / fraction.denominator;
+            const roundedDecimal = Math.round(decimal * denominator) / denominator;
+            return toFraction(roundedDecimal);
+        }
+        function toFraction(decimal) {
+            const wholeNumber = Math.floor(decimal);
+            const fraction = decimal - wholeNumber;
+            if (fraction !== 0) {
+                const denominator = 16;
+                let numerator = Math.round(fraction * denominator);
+                if (numerator === denominator) {
+                    numerator = 0;
+                    wholeNumber += 1;
+                }
+                if (numerator !== 0) {
+                    const gcd = getGCD(numerator, denominator);
+                    return `${wholeNumber} ${numerator / gcd}/${denominator / gcd}`;
+                }
+            }
+            return `${wholeNumber}`;
+        }
+        function getGCD(a, b) {
+            return b === 0 ? a : getGCD(b, a % b);
+        }
     </script>
 </body>
 </html>
